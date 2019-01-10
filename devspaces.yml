@@ -1,0 +1,68 @@
+--- # devspaces.yml
+name: lamp-demo
+description: Development environment for building, running and testing Aurea crm
+#icon-file: relative/path/to/icon/image.png  # optional
+
+# If you want to use a public Docker image to start your DevSpace from, enter the
+# name and tag here. By default we will look for a Dockerfile in this same
+# directory.
+docker-image: mattrayner/lamp:latest-1404-php7
+
+# If you want to use a different Dockerfile for your DevSpace, provide the path
+# here. You cannot specify both docker-image and docker-file
+# docker-file: relative/path/to/Dockerfile
+
+# If you need additional files when building you Dockerfile, such as some
+# application binaries that you Dockerfile references, list the glob paths to
+# include here. They are relative to this devspaces.yml file.
+#docker-build-includes:
+#  - jarfiles/**
+#  - myapplication.tar.gz
+
+ports:
+  - protocol: http # can be udp|tcp|http
+    port-number: 80
+    description: web app http port
+  - protocol: tcp
+    port-number: 3306
+    description: MySQL port
+
+#
+# Any environment variable specified here is injected into the build and/or
+# runtime environment of the Docker container.
+# The *Shared* flag determines if the value of the environment variable is shared
+#   when this DevSpace is shared with others. The default is to share environment
+#   variable values. If there is a value that should be set differently by every
+#   developer that the DevSpace is shared with then Shared should be set to No.
+#   An example of a value not to share is a API key that every developer generates
+#   for themselves.
+# The *Scope* enum determines if the environment variable is used at buildtime
+# (docker build), runtime (docker run) or both. The acceptable values are 'run',
+# 'build' and 'all'. If unspecified, scope is 'all' by default.
+#environment-vars:
+#  - name: JAVA_HOME
+#    value: /opt/java/jdk19/jdk1.9.2
+#    description: Java installation to use
+#    shared: Yes  # when true, the value is shared when the DevSpace is shared. When false, a value must be supplied by someone this DevSpace is shared with
+#    scope: run #
+#  - name: TWITTER_SECRET
+#    value: HBgE2mc3LFdcg4j6djkk4uUDQaqDNB
+#    description: API key to use when accessing the Twitter API
+#    shared: No
+#  - name: COMPILER_ARGS
+#    value: -C -t="avr-gcc"
+#    description: Arguments to pass to the compiler when building
+#    scope: build
+
+# When you bind your DevSpace to a local directory, the files will be synchronized
+# betewen your workstation and the /data directory in your DevSpace container.
+# If there are files that should not be synced, such as large objects or logs,
+# configure an ignore directive here
+sync-ignore: |
+  (?d).DS_Store
+  !frobble
+  !quuz
+  foo
+  *2
+  qu*
+  (?i)my pictures
